@@ -9,7 +9,7 @@ permalink: /music/
   <header class="music-intro">
     <p class="eyebrow">Original Tracks</p>
     <h1>Music</h1>
-    <p>以前的一些Demo...</p>
+    <p>Some demos...</p>
   </header>
 
   {% if site.data.music and site.data.music.size > 0 %}
