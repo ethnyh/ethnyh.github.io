@@ -1,0 +1,186 @@
+4.13
+Content:
+1. Lambda Function
+(1) capture list
+(2) return type
+2. Default Capture / Exception
+3. "mutable" / "auto"
+4. Function Pointer
+
+
+
+
+
+Lambda Function & Function Pointer
+
+Lambda Function -> Local Anonymous function (function w/o a name)
+
+[ <capture-list> ] ( <capture-list> ) mutable -> <return-type> { body }
+
+void f() {}   -->    " [](){}      ()"
+                      expression  call
+
+
+lambda usually defined inside funtions
+
+
+Capture List:
+
+[=]: capture all local variables by value.
+[&]: capture all local variables by reference.
+[variables]: specify only the variables to capture
+
+* Global variables can always be used in lambda
+
+
+
+Remarks:
+
+当 lambda 的捕获列表为空 [] 时，它内部会生成一个转换运算符，可隐式转换为对应函数签名的指针。
+
+例如：auto f = [](int x) { return x * 2; }; 可以赋值给 int(*fp)(int) = f;。
+
+
+
+Return Type:
+
+"void" if no return statement
+
+may be automatically inferred if the is a return statement
+
+also can be specified using -> <return type> implicitly
+
+Example:
+
+int square(int n) { return n*n }
+
+int main(){
+    int  x = 10;
+    square(x); // function call
+
+    // lambda expression
+    [](int n){return n * n} (x) // return type is automatically inferred -> int
+}
+
+int range = [1,2,7]
+for (int v : range) // pass by value -> copy
+for (int &v : range) // pass by reference -> if v is changed then range's elements are changed
+
+// A lambda for computing max between 2 numbers
+int x[3][2] = { {3, 6}, {9, 5}, {7, 1} };
+for (int k = 0; k < sizeof(x)/sizeof(x[0]); ++k)
+    cout << [](int a, int b) { return (a > b) ? a : b; } (x[k][0], x[k][1])<< endl;
+
+
+
+int main(){
+    int  x = 10;
+
+    [](){return x * x} () // Error! x is not captured
+
+    [=](){return x * x}
+}
+
+Default Capture:
+
+[=, &x](){ cout << ++x << ", " << y << " , " << a << endl; } // capture all by value by default , EXCEPT x is caputured by ref
+[&x, =](){ cout << ++x << ", " << y << " , " << a << endl; } // ERROR!
+// This is a Compilation Error! default capture must be the FIRST capture in the lambda
+
+* Global variables can always be used in lambda!
+
+it is automatically passed by reference ( modifiable )
+
+
+"mutable" keyword 
+
+[=](){ cout << ++x << endl; } // Error since x is Read-only ( "const")
+
+[=]() mutable { cout << ++x << endl; } // Okay ( const -> non-const)
+
+Remark:
+* mutable keyword只改变capture-list ( [] ) 中按值传递的变量 从const -> non-const
+对于其他变量 mutable没有影响
+
+
+"auto" keyword
+The keyword auto allows one to declare a variable without a
+type which will be inferred automatically by the compiler
+
+
+return type:
+
+“ -> <return-type> ”
+
+
+Function Pointer:
+
+bool fun() {}
+
+int main(){
+
+    bool (*ptr) () = nullptr;
+    cout << fun << endl; // 0x1234567
+
+}
+
+int larger(int a, int b){}
+int smaller(int a ,int b){}
+
+int (*f) (int , int)
+int choice;
+cin >> choice
+f = (choice == 1)? larger : smaller // Here , dereference "*" is optional
+
+
+Array of function pointer:
+
+int (*f[2]) (int , int)
+
+f[0] = larger;
+f[1] = smaller;
+
+
+template<typename T>
+void apply(void (*func)(T&)) { }
+
+int main() {
+    apply([](int& x) { x *= 2; });  // 错误！推导失败
+}
+
+原因：编译器看到第二个参数是 lambda，它需要先推导 T。但 lambda 不是函数指针，类型不匹配，推导失败。
+
+-> 需要从函数指针推导T 
+
+however lambda is not a function pointer, so cannot derive T so fail
+
+
+
+
+Remark:
+auto f = [](int x,int y){return x + y} // Okay
+double(*g)(int,int) = [](int x,int y){return x + y;}; // return type is not the same!
+                                                // warning: converting 'int' to 'double' in return statement
+                                                // This is not a Compilation Error!
+
+Use of Function Pointer:
+
+int f( int (*fptr)(int,int),int a ,int b){
+    return fptr(a,b); 
+}
+
+then we can use function as parameter:
+
+f(fun1,a,b); // Okay
+f(fun2,a,b); // Okay
+
+
+Function pointer array:
+
+double (*f[])(double,double)
+    =  {add, sub, multi,div}
+
+f[2](x,y) // Okay
+
+
+Nested Lambda --> Notice parameter passing type!

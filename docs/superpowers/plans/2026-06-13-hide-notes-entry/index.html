@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Personal site and course notes for GUO Yiheng.">
+    <title>Hide Notes Entry Implementation Plan | GUO Yiheng</title>
+    <link rel="stylesheet" href="/assets/css/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="/">GUO Yiheng</a>
+        <div class="nav-links">
+          <a href="/" >About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page">
+      <h1 id="hide-notes-entry-implementation-plan">Hide Notes Entry Implementation Plan</h1>
+
+<blockquote>
+  <p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code class="language-plaintext highlighter-rouge">- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+
+<p><strong>Goal:</strong> Remove all site-visible entry points to the Notes page while keeping <code class="language-plaintext highlighter-rouge">/mynotes/</code> directly accessible.</p>
+
+<p><strong>Architecture:</strong> Make a minimal shared-layout change to remove the navigation link, keep the dedicated notes page untouched, and update repository documentation so it no longer describes Notes as a standard navigation destination. Verify by searching references and building the Jekyll site.</p>
+
+<p><strong>Tech Stack:</strong> Jekyll, Liquid templates, Markdown</p>
+
+<hr />
+
+<h3 id="task-1-remove-the-shared-navigation-entry">Task 1: Remove the shared navigation entry</h3>
+
+<p><strong>Files:</strong></p>
+<ul class="task-list">
+  <li>
+    <p>Modify: <code class="language-plaintext highlighter-rouge">_layouts/default.html</code></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 1: Write the failing test</strong></p>
+  </li>
+</ul>
+
+<p>Search for the current navigation entry to prove it exists before removal.</p>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "&lt;a href=\"\\{\\{ '/mynotes/' \\| relative_url \\}\\}\"|&gt;Notes&lt;" _layouts/default.html</code>
+Expected: a match showing the <code class="language-plaintext highlighter-rouge">Notes</code> anchor in the shared navigation.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "&lt;a href=\"\\{\\{ '/mynotes/' \\| relative_url \\}\\}\"|&gt;Notes&lt;" _layouts/default.html</code>
+Expected: exit code <code class="language-plaintext highlighter-rouge">0</code> with a line containing the <code class="language-plaintext highlighter-rouge">Notes</code> link, proving the undesired behavior exists.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 3: Write minimal implementation</strong></li>
+</ul>
+
+<p>Remove the <code class="language-plaintext highlighter-rouge">Notes</code> anchor from the <code class="language-plaintext highlighter-rouge">.nav-links</code> block and leave the <code class="language-plaintext highlighter-rouge">About</code> link intact.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 4: Run test to verify it passes</strong></li>
+</ul>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "&lt;a href=\"\\{\\{ '/mynotes/' \\| relative_url \\}\\}\"|&gt;Notes&lt;" _layouts/default.html</code>
+Expected: no match for the removed navigation entry.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 5: Commit</strong></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add _layouts/default.html
+git commit <span class="nt">-m</span> <span class="s2">"Remove Notes navigation entry"</span>
+</code></pre></div></div>
+
+<h3 id="task-2-remove-repository-level-public-navigation-wording">Task 2: Remove repository-level public navigation wording</h3>
+
+<p><strong>Files:</strong></p>
+<ul class="task-list">
+  <li>
+    <p>Modify: <code class="language-plaintext highlighter-rouge">README.md</code></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 1: Write the failing test</strong></p>
+  </li>
+</ul>
+
+<p>Search for the README wording that still presents Notes as a normal site page.</p>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "notes page|about page" README.md</code>
+Expected: a match describing the site as having a notes page.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "notes page|about page" README.md</code>
+Expected: exit code <code class="language-plaintext highlighter-rouge">0</code> with the current wording present.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 3: Write minimal implementation</strong></li>
+</ul>
+
+<p>Change the README description so it describes course-note assets without advertising a public Notes navigation page.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 4: Run test to verify it passes</strong></li>
+</ul>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "notes page" README.md</code>
+Expected: no match.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 5: Commit</strong></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add README.md
+git commit <span class="nt">-m</span> <span class="s2">"Update README notes wording"</span>
+</code></pre></div></div>
+
+<h3 id="task-3-verify-direct-access-remains-while-site-visible-entries-are-removed">Task 3: Verify direct access remains while site-visible entries are removed</h3>
+
+<p><strong>Files:</strong></p>
+<ul class="task-list">
+  <li>Verify: <code class="language-plaintext highlighter-rouge">_layouts/default.html</code></li>
+  <li>Verify: <code class="language-plaintext highlighter-rouge">mynotes.md</code></li>
+  <li>
+    <p>Verify: <code class="language-plaintext highlighter-rouge">README.md</code></p>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 1: Write the failing test</strong></li>
+</ul>
+
+<p>Define the final checks:</p>
+<ul class="task-list">
+  <li>shared navigation should not contain a <code class="language-plaintext highlighter-rouge">Notes</code> link</li>
+  <li><code class="language-plaintext highlighter-rouge">mynotes.md</code> should still declare <code class="language-plaintext highlighter-rouge">permalink: /mynotes/</code></li>
+  <li>
+    <p>repo-wide search should show no remaining site-visible <code class="language-plaintext highlighter-rouge">/mynotes/</code> links outside the page definition/spec docs</p>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "mynotes|Notes" _layouts/default.html mynotes.md README.md</code>
+Expected before implementation: <code class="language-plaintext highlighter-rouge">_layouts/default.html</code> still contains <code class="language-plaintext highlighter-rouge">Notes</code>.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 3: Write minimal implementation</strong></li>
+</ul>
+
+<p>No additional code if prior tasks are complete.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 4: Run test to verify it passes</strong></li>
+</ul>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">rg -n "mynotes|Notes" _layouts/default.html mynotes.md README.md</code>
+Expected: <code class="language-plaintext highlighter-rouge">_layouts/default.html</code> no longer shows the nav entry, <code class="language-plaintext highlighter-rouge">mynotes.md</code> still contains <code class="language-plaintext highlighter-rouge">permalink: /mynotes/</code>, and README no longer describes a notes page.</p>
+
+<p>Run: <code class="language-plaintext highlighter-rouge">bundle exec jekyll build</code>
+Expected: successful build with exit code <code class="language-plaintext highlighter-rouge">0</code>.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Step 5: Commit</strong></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add _layouts/default.html README.md
+git commit <span class="nt">-m</span> <span class="s2">"Hide public Notes entry"</span>
+</code></pre></div></div>
+
+    </main>
+
+    <footer class="site-footer">
+      <span>&copy; 2026 GUO Yiheng</span>
+      <a href="mailto:yguocn@connect.ust.hk">yguocn@connect.ust.hk</a>
+    </footer>
+    <script src="/assets/js/site.js"></script>
+  </body>
+</html>

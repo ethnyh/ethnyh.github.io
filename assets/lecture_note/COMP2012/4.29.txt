@@ -6,30 +6,6 @@ Content:
 
 
 
-
-Double Hashing
-
-f(i) = i * hash2(k)
-
-hi(k) = (hash(k) + f(i)) mod m
-      = (hash(k) + i* hash2(k)) mod m
-
-e.g. hash2(k) = R − (k mod R)
-
-"Let key itself decide the stride!"
-
-Remarks:
-
-hash2( ) must never evaluate to zero.
-
-For any key k, hash2(k) must be relatively prime to the table
-size m. 
-Otherwise, we will only be able to examine a fraction
-of the table entries
-
-One solution is to make m prime, and choose R to be a prime number smaller than m, and set
-hash2(k) = R − (k mod R)
-
 Example 1:
 
 int square(int x) { 

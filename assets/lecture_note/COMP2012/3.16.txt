@@ -9,7 +9,8 @@ Content:
 
 about virtual function's implementation:
 
-class A{
+class A
+{
     public:
         virtual void f() const; // declaration
 }
@@ -21,10 +22,14 @@ class A{
 
 Base* baseptr = new DeriveFromDerived;
 
+
+
 Base class has a virtual f()
 Derived class has a f()
 Derived Derived class has a f()
 baseptr->f();
+
+
 
 --> call Derived Derived class's f()!
 why?
@@ -199,6 +204,32 @@ destructor, it represents base class’ virtual function:
 when a derived class is being deleted, the derived-specific portion has
 already been deleted before the base class destructor is called!
 (derived class 先被删除, 已经不完整的class, 无法提供member function -> Base class function)
+
+
+
+
+
+Remark:
+
+class Base{
+    Base(const Base&){};
+}
+
+class Derived: public Base{
+}
+
+Derived obj;
+Base(obj);
+
+Here, since polymorphism, "const Base&" accept "Derired" input
+So no conversion constructor involved
+
+Output: 
+
+Derived default constructor
+Base copy constructor
+
+
 
 ABC:  Abstract Base Class
 

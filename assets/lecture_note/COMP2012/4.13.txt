@@ -33,6 +33,15 @@ Capture List:
 * Global variables can always be used in lambda
 
 
+
+Remarks:
+
+当 lambda 的捕获列表为空 [] 时，它内部会生成一个转换运算符，可隐式转换为对应函数签名的指针。
+
+例如：auto f = [](int x) { return x * 2; }; 可以赋值给 int(*fp)(int) = f;。
+
+
+
 Return Type:
 
 "void" if no return statement
@@ -130,3 +139,17 @@ int (*f[2]) (int , int)
 
 f[0] = larger;
 f[1] = smaller;
+
+
+template<typename T>
+void apply(void (*func)(T&)) { }
+
+int main() {
+    apply([](int& x) { x *= 2; });  // 错误！推导失败
+}
+
+原因：编译器看到第二个参数是 lambda，它需要先推导 T。但 lambda 不是函数指针，类型不匹配，推导失败。
+
+-> 需要从函数指针推导T 
+
+however lambda is not a function pointer, so cannot derive T so fail

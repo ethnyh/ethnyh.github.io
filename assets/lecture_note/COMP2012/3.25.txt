@@ -230,3 +230,24 @@ pbv(obj); --> create temporary obj : B(const B&)
 
 
 
+template <typename T>
+T myMax (T &a, T &b)
+{
+    return (a > b)? a : b;
+}
+ 
+template <>
+int myMax (int &a, int &b)
+{
+    cout << "Called ";
+    return (a > b)? a : b;
+}
+ 
+int main ()
+{
+    int a = 10, b = 20;
+    cout << myMax<int>(a, b);
+}
+
+Output: Called 20
+since template specialization

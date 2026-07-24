@@ -149,6 +149,9 @@ with copy elision:
 conversion: sunny
 conversion: cloudy
 conversion: rainy
+
+after main:
+
 ~Word():rainy
 ~Word():cloudy
 ~Word():sunny
@@ -173,6 +176,8 @@ copy : rainy
 ~Word():cloudy // delete temp object
 ~Word():sunny // delete temp object
 
+after main:
+
 ~Word():rainy
 ~Word():cloudy
 ~Word():sunny
@@ -192,5 +197,6 @@ Remarks:
 Word weather[3] = {};
 weather[0] = "sunny" // assignment operator Okay
 weather[0]{"sunny} //error!
+
 "列表初始化 (initialization syntax) 只能用于“创建对象”，不能用于修改已存在的对象"
 

@@ -98,7 +98,8 @@ bool BST<T>::contains(const T& x) const
         return true;
     else if(x < root -> value)
         return root->left.contains(x)
-    else return root->right.contains(x)
+    else 
+        return root->right.contains(x)
 }
 
 
@@ -203,6 +204,7 @@ void BST<T>:: remove (const T&x)
         root-> left.remove(x);
     else if ( x > root->value)
         root->right.remove(x);
+
     else if (root->left.root && root->right.root)
     {
         root->value = root->right.find_min().value;
@@ -220,7 +222,6 @@ void BST<T>:: remove (const T&x)
         delete deletingNode;
     }
 }
-
 
 
 

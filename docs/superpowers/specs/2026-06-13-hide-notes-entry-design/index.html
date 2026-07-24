@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Personal site and course notes for GUO Yiheng.">
+    <title>Summary | GUO Yiheng</title>
+    <link rel="stylesheet" href="/assets/css/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="/">GUO Yiheng</a>
+        <div class="nav-links">
+          <a href="/" >About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page">
+      <h2 id="summary">Summary</h2>
+
+<p>Hide all site-visible entry points to the Notes page while keeping the page itself reachable at <code class="language-plaintext highlighter-rouge">/mynotes/</code> when the URL is entered directly.</p>
+
+<h2 id="scope">Scope</h2>
+
+<ul>
+  <li>Remove the <code class="language-plaintext highlighter-rouge">Notes</code> link from the shared site navigation.</li>
+  <li>Remove or avoid any other site-visible links that point users to <code class="language-plaintext highlighter-rouge">/mynotes/</code>.</li>
+  <li>Keep the existing <code class="language-plaintext highlighter-rouge">mynotes.md</code> page and its <code class="language-plaintext highlighter-rouge">permalink: /mynotes/</code>.</li>
+  <li>Update repository documentation so it does not describe Notes as a normal navigable page.</li>
+</ul>
+
+<h2 id="out-of-scope">Out of Scope</h2>
+
+<ul>
+  <li>Adding authentication, password protection, or access control.</li>
+  <li>Changing the <code class="language-plaintext highlighter-rouge">/mynotes/</code> URL.</li>
+  <li>Blocking search engine indexing unless requested separately.</li>
+</ul>
+
+<h2 id="current-structure">Current Structure</h2>
+
+<ul>
+  <li>The primary navigation is defined in <code class="language-plaintext highlighter-rouge">_layouts/default.html</code>.</li>
+  <li>The Notes page is implemented by <code class="language-plaintext highlighter-rouge">mynotes.md</code> and exposed at <code class="language-plaintext highlighter-rouge">/mynotes/</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">index.md</code> and <code class="language-plaintext highlighter-rouge">404.html</code> do not currently link to <code class="language-plaintext highlighter-rouge">/mynotes/</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">README.md</code> still describes the site as having a normal notes page.</li>
+</ul>
+
+<h2 id="proposed-change">Proposed Change</h2>
+
+<ol>
+  <li>Delete the <code class="language-plaintext highlighter-rouge">Notes</code> navigation item from <code class="language-plaintext highlighter-rouge">_layouts/default.html</code>.</li>
+  <li>Leave <code class="language-plaintext highlighter-rouge">mynotes.md</code> unchanged so direct URL access still works.</li>
+  <li>Update <code class="language-plaintext highlighter-rouge">README.md</code> wording so it no longer presents Notes as part of the public navigation.</li>
+  <li>Verify via repo-wide search that no visible links to <code class="language-plaintext highlighter-rouge">/mynotes/</code> remain.</li>
+</ol>
+
+<h2 id="data-flow--routing">Data Flow / Routing</h2>
+
+<ul>
+  <li>Visiting <code class="language-plaintext highlighter-rouge">/</code> continues to render the About page.</li>
+  <li>Visiting <code class="language-plaintext highlighter-rouge">/mynotes/</code> directly continues to render the Notes page.</li>
+  <li>No in-site button or link should route a visitor from the normal site UI to <code class="language-plaintext highlighter-rouge">/mynotes/</code>.</li>
+</ul>
+
+<h2 id="error-handling">Error Handling</h2>
+
+<ul>
+  <li>No runtime logic changes are required.</li>
+  <li>If future pages add links to <code class="language-plaintext highlighter-rouge">/mynotes/</code>, the repo-wide search step should catch them.</li>
+</ul>
+
+<h2 id="testing">Testing</h2>
+
+<ul>
+  <li>Search the repository for <code class="language-plaintext highlighter-rouge">mynotes</code> and <code class="language-plaintext highlighter-rouge">Notes</code> references after the change.</li>
+  <li>Build the site locally if the toolchain is available and confirm:
+    <ul>
+      <li>navigation no longer shows <code class="language-plaintext highlighter-rouge">Notes</code></li>
+      <li><code class="language-plaintext highlighter-rouge">/mynotes/</code> still renders</li>
+    </ul>
+  </li>
+</ul>
+
+    </main>
+
+    <footer class="site-footer">
+      <span>&copy; 2026 GUO Yiheng</span>
+      <a href="mailto:yguocn@connect.ust.hk">yguocn@connect.ust.hk</a>
+    </footer>
+    <script src="/assets/js/site.js"></script>
+  </body>
+</html>

@@ -81,7 +81,6 @@ Originally we must write a.operator+(b) or operator+(a,b) for addition
 -> We can write a + b -> syntactic sugar
 
 
-
 Almost all operators in C++ can be overloaded except:
 .   ::  ?:  .*      (reason)
 The C++ parser is fixed. That means that you can only

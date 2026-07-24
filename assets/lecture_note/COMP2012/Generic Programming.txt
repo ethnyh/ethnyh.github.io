@@ -1,0 +1,729 @@
+3.23
+Content:
+1. Some Remarks
+2. Function Template
+3. Template instantiation
+4. Explicit template instantiation
+5. Template specialization
+
+Remark:
+virtual void f() const final override {}
+virtual void f() const override final {}
+They are Both fine!
+virtual void f() override final const {} // Error!
+// const must next to f() (i.e. the function),since it is function which declared constructor
+
+Remark:
+if we want to use "typeid()" , We must #include <typeinfo>
+
+
+
+Function Template:
+
+template <typename T>
+const T& larger(const T&a, const T&b){return (a<b) ? a:b}
+
+larger(10,20)
+larger(1.5,2.5)
+larger("comp2011","cpp") 
+// They are all fine
+
+
+"Template instantiation"
+Template definition -> compiler -> Actual code of the program (i.e. subsituting T)
+
+template <typename T>
+
+T : formal parameter
+
+if calling a template with different type -> compiler generate SEPERATE instantiated function code for EACH type
+(the more types template called with , the larger the program size is )
+
+
+
+
+void g(int a, int b){} -> g(10,0.5) // Alright , Type coersion (double -> int)
+larger(10,0.5) // ERROR!
+
+For template , The parameter must be of the same type! There is NO implicit type coersion!
+
+if we want type conversion:
+Solution 1: manual conversion
+
+larger(10,static_cast<double>(0.5)) // Okay!
+
+Solution 2: Explicit template instantiation
+
+larger<int>(10,0.5) // 0.5 -> 0 (cast时采用向“整数”截断 : static_cast<int>(0.99) -> 0)
+larger<double>(10,0.5) // 10 -> 10.0
+
+They are all fine!
+
+
+Solution 3 : Can we have different types of parameters in the template?
+
+(1) "Template with multiple type parameters"
+template <typename T1, typename T2>
+
+void larger(T1 a ,T2 b){}
+
+larger(10,0.5)
+larger(0.5,10)
+// They are all fine!
+
+But : different types -> many combinations -> compiler generate many code fragments -> THIS IS NOT CODE REUSING!
+
+Remarks:
+
+larger("comp2012","c++") // Error! argument substitution failed
+
+since "comp2012" is recognized as char[9] while "c++" is char[4] -> They are not the same type!
+
+How to fix it : larger<string>("comp2012","c++")
+
+
+Remarks: comparing pointer
+
+const char* s3 = "microsoft"
+const char* s4 = "apple"
+
+larger(s3,s4) // output: "apple"
+
+Why? since larger() is comparing pointer , instead of the length of the pointer array
+
+Remarks: reinterpret_cast
+cout << s3 << endl;  // Output: microsoft
+cout << reinterpret_cast<const void*> (s3) <<endl; // Output : 0x1234567 (the address of the pointer points to)
+
+(2) Template specialization:
+
+template<>
+larger(const char* const& a, const char* const& b)
+
+const char* s3 = "microsoft"
+const char* s4 = "apple"
+
+when calling: larger(s3,s4)
+first , find the first template function:
+
+template <typename T1, typename T2>
+void larger(T1 a ,T2 b){}
+
+second, find the second template function:
+
+template<>
+larger(const char* const& a, const char* const& b)
+
+Since larger(const char* const& a, const char* const& b) is more matched , compiler will eventually calling this function
+
+ 
+What if we don't write template<>?
+
+then this is an ordinary function -> compiler will firstly use ordinary function
+
+function1:
+
+template<>
+larger(const char* const& a, const char* const& b)
+
+function2:
+
+larger(const char* const& a, const char* const& b)
+
+if we're calling larger(s3,s4) , the compiler will use function2.
+
+
+why const char* const &?
+
+// const T 表示：这个指针本身是常量
+const T& = const (const char*)& = const char* const&
+//         ^^^^^^^^^^^^^^^^
+//         指针本身是常量
+
+const char* = (const char)*
+const (char*) = char* const // the pointer itself is const
+
+
+3.25
+Content:
+1. Issues on template (Issues on Return by Reference)
+2. Class template
+3. Reference to an array
+
+
+
+
+template <typename T1, typename T2> inline const T1& 
+    larger(const T1& a , const T2 &b) { return (a < b) ? b : a ;}
+
+(1) 
+
+What if we return a T2 ref? (i.e. b > a)
+
+first, a temporary obj will generated , which is converted from T2 to T1
+then the temporary obj will be returned by reference
+--> Warning! (Not an error),  we're returning a Temporary object by reference!
+
+similiarly to:
+
+const int& fun(double& b){
+    return b;
+}
+
+1. b --convert--> temporary int obj
+2. return the temporary int obj by reference 
+--> Warning! Returning temporary object by reference
+
+Solution:
+1. Return by value
+2. Do not return anything
+
+double a = 0.5;
+int& b = a; // Error! Not same type! 
+
+
+
+(2)
+
+What if we're calling larger( a , b ), where a,b are User-defined class object?
+
+Error! if we don't implement operator overloading
+
+
+
+(3) 
+
+short s = 1; char c = ’A’;
+int i = 1023; double d = 3.1415;
+print_larger(s, s); print_larger(s, c);
+print_larger(c, s); print_larger(s, i);
+// ... And all other combinations; 16 in total.
+
+With the current compiler technology, this means that we get 16 (almost identical) fragments of code in the executable
+program. There is NO sharing of code.
+
+
+
+Common Errors:
+
+template <typename T> T* create(){ return new T ;}
+
+int main(){
+create(); // What type ? How to initialize/delete?
+          // function w/o any arguments
+
+create<int>() // Okay! manually set argument type
+}
+
+
+
+Class Template:
+
+template <typename T>
+class List_Node{
+
+    public:
+        List_Node(const T& x): data(x){}
+
+        T data;
+        List_Node* next {nullptr}
+}
+
+initialization:   List_Node<int> node;
+
+
+template <typename T , int N> // we can add a non-type parameter to template!
+
+class Container{
+    ....
+    private:
+        T data[N]
+}
+
+Remark:
+non-type parameter MUST be a CONST EXPRESSION!
+
+
+
+Compound data type: 
+
+int arr[9]; --> data type: int[9]
+float arr2 [3]; --> data type: float[3]
+
+
+Reference to an Array:
+
+int arr [9] = {1,2,3,4,5,6,7,8,9}
+
+int (&ref) [9] = arr; // ref to an array
+
+int arr2 [3] = {1,2,3}
+
+void fun(int (&ref)[9]) ;
+
+fun (arr) // OK! They are the same type ( both int[9] )
+fun (arr2); // error! we cannot pass a "int[3]" obj to a "int[9]" parameter by reference!
+
+Pass by reference w/ Template
+
+template< typename T, int N>
+int f(T (&x) [N]){};
+
+f(arr); // Okay! T : int , N : 9 
+( T and N are automatically interpreted by Complier ! )
+
+f(arr2); // Okay! T : int , N : 3
+
+ 
+Remarks:
+
+For class template , we MUST specify the Actual type of template argument when initialization!
+
+
+Difference Between Class and Function Templates:
+
+For function templates, the compiler may deduce the template arguments from the function call.
+
+int i = larger(4, 5); // Rely on compilers to deduce larger<int>
+int j = larger<int>(7, 2); // Explicit instantiation
+
+For class templates, you always have to specify the actualtemplate arguments when creating the class objects;
+The compiler does not deduce the template arguments.
+
+List primes; // Error! how can compilers deduce the type?
+primes.append(2); // Error! too late; compilers can’t lookahead!
+
+
+
+
+Seperate Compilation for template:
+
+review: Seperate Compilation for non-template program:
+    declaration -> header file (e.g. apple.h)
+    implementation(definition) -> cpp file (e.g. apple.cpp)
+
+
+Since: a function / class template is initialized only when it is used!
+
+-> We must put the template function/class definitions in the
+header file as well and include the template header file in
+every files which use the template
+
+e.g.
+
+WRONG:
+
+// utils.h 
+template <typename T>
+T add(T a, T b);
+
+// utils.cpp 
+#include "utils.h"
+template <typename T>
+T add(T a, T b) {
+    return a + b;
+}
+
+#include "utils.h"
+int main() {
+    int x = add(3, 5);     // ERROR!
+    double y = add(3.14, 2.5);  // ERROR!
+}
+
+Why?  main.cpp ---include---> utils.h
+
+compiler does not have function definition when initializing at utils.h!
+
+
+// utils.h 
+#pragma once
+template <typename T>
+T add(T a, T b) {
+    return a + b;  // Definition directly in header file
+}
+
+// main.cpp 
+#include "utils.h" // include header file
+int main() {
+    int x = add(3, 5);        // Okay
+    double y = add(3.14, 2.5);  // Okay
+}
+
+
+A function/class template is instantiated only when it is
+used, and its definition must be in the same file which calls it.
+
+Remarks:
+在 C/C++ 中，赋值表达式 的值，就是 赋值完成后左边变量的值
+
+"a = 0". <==> "0"
+
+if (0) --> Always false
+
+if (a = 0) --> Also Always false
+
+
+
+PBV in Polymorphism --> Slicing
+
+class D : public B
+
+void pbv(B b){};
+
+D obj;
+
+pbv(obj); --> create temporary obj : B(const B&)
+
+
+
+template <typename T>
+T myMax (T &a, T &b)
+{
+    return (a > b)? a : b;
+}
+ 
+template <>
+int myMax (int &a, int &b)
+{
+    cout << "Called ";
+    return (a > b)? a : b;
+}
+ 
+int main ()
+{
+    int a = 10, b = 20;
+    cout << myMax<int>(a, b);
+}
+
+Output: Called 20
+since template specialization
+
+
+3.30
+Content:
+1. Operator Overloading
+(1) Coersion
+(2) Member operator / Global Non-member operator
+(3) Syntactic sugar
+(4) ostream/instream
+
+
+
+Remark:
+
+template<> void fun(const int&)
+template<typename T> void( const T& ) ... // Error! cannot write specialization first
+
+
+Operator Overloading:
+
+cout <<  --> insertion (output) operator
+
+1 + 1 --> add operator
+
+1 < 2 --> comparison operator
+
+class Vector{ ... }
+
+if: Vector a,b;
+
+cout << a + b <<endl; // Error! there is no addition operator for class Vector
+
+-->  class Vector{ 
+    public: 
+        Vector operator+ (const Vector& other) const{ }; 
+}
+
+a.operator+(b) or a + b
+
+
+Coersion:
+
+int a = 2 ; double b= 0.5;
+
+a + b --> a : int --> double | result : double
+
+
+Remark:
+
+Vector(double a = 0 , double b = 0): x(a), y(b) {}
+...
+Vector(10); // Now a = 10 ; b = 0 by default
+
+
+Vector a;
+
+a + 10; // 10 -> Vector(10) -> a + temp_obj (Coersion!)
+
+
+10 + a; // Error! since there is no + operator for int and obj Vector!
+
+
+in "a + 10" , compiler call Vector operator+(const Vector& other){}
+
+in "10 + a" , compiler call 10.operator+(a) --> It does not exist!
+
+--> Class object must be the Left Operand!
+--> Here, the addition is not communicative
+
+
+
+Global Non-member Operator+ function:
+
+Vector operator+(const Vector& a, const Vector& b)
+    { return Vector(a.getx() + b.getx(), a.gety() + b.gety()); }
+
+Now : 10 + a and a + 10 are both fine!  
+
+syntactic sugar:
+
+Originally we must write a.operator+(b) or operator+(a,b) for addition
+
+-> We can write a + b -> syntactic sugar
+
+
+Almost all operators in C++ can be overloaded except:
+.   ::  ?:  .*      (reason)
+The C++ parser is fixed. That means that you can only
+re-define existing operators, and you cannot define new
+operators (using new symbols).
+
+
+Nor can you change the following properties of an operator:
+
+1. Arity: the number of arguments an operator takes.
+e.g., !x x+y a%b s[j]
+(So you are not allowed to re-define the + operator to take 3
+arguments instead of 2.)
+
+2. Associativity: e.g. a+b+c is always identical to (a+b)+c.
+
+3. Precedence: which operator is done first?
+e.g., a+b*c is treated as a+(b*c).
+
+Remarks:
+
+Every operator function you define must implicitly
+have at least one argument of a user-defined class type.
+
+
+"<<" : insertion ( output ) operator
+
+ostream& operator<<(ostream& os){
+    os << x << endl;
+    return os;
+}
+
+ostream : output stream class --> "cout" "cerr" ... are all "ostream“ class object
+
+Remark: ostream( output stream ) must be passed by reference! and has to be returned by reference!
+
+Problem: if we write operator<< in this way, then:
+
+cout << x; // Error! 
+
+--> actually x << cout 
+
+We need to write "<<" as a Global non-member function!
+
+<< /  >> 不能写在类定义内
+
+ostream& operator<< (ostream& os , Vector& v) {
+    os << v.getX() << endl;
+}
+
+
+
+input operator >>
+
+instream& operator>> (instream& os, Vector& a){
+    int x
+    os >> x;
+    a.setX(x);
+    return is;
+}
+
+operator +=
+
+if RBR : Vector& operator+=(const Vector& other){}
+then:
+    (a+=b)+=b // Okay a.x = a.x+b.x+b.x
+
+if RBCR: const Vector& operator+=(const Vector& other){}
+then:
+    (a+=b)+=b // ERROR
+
+
+4.1
+Content:
+1. Assignment Operator
+2. Operator[]
+3. Increment Operator
+4. Friend Functions & Classes
+
+
+
+Remark:
+
+template <typename T,int NUM>
+
+int size = 5;
+A<int,size> int_array // Error! 
+
+The value of 'size" is not usable in a constant expression
+
+if const int size = 5; then Okay
+
+--> non-type parameter must be a const expression!
+
+
+implememt operator as global function
+then: 10 + a / a + 10 is both Okay
+if not, then 10 + a is an error.
+
+
+Assignment Operator
+
+if the object "owns" a dynamic data member:
+
+class Word{
+    private:
+    char* str; // Dynamic data member
+}
+
+if We're using default Assignment operator:
+
+Word ship("titanic");
+Word song("My heart");
+song = ship; // Shallow copy!
+
+// End of main: Double delete!
+        also: the dynamic data member "My heart" has no pointer points to
+                --> Undefined Behaviour
+
+Implementing Assignment Operator:
+
+Word& operator=(const Word& w){
+    if (this != &w){
+        delete[] str; // release the original data member;
+        str = new char[strlen(w.str)+1];
+        strcpy(str,w.str); // Deep copy
+        freq = w.freq;
+    }
+    return (*this)
+}
+
+
+Operator[]:
+
+double& operator[](int i){
+    switch(i){
+        case 1: return x;
+        case 2: return y;
+        default: cerr << "Wrong Index" <<endl;
+    }
+    return x; // dummy returnment
+}
+
+// read only function
+void fun(const Vector& a){
+    cout << a << endl;
+    cout << a[0] << endl; // a[0] is a mutator
+                          // since read-only function, Compilation Error!
+
+    // Need another accessor Version!
+}
+
+const double& operator[](int i) const{} // Only allow reading 
+
+
+Increment Operator (Operator++):
+
+Pre-Increment:
+Vector& operator++();
+
+"++v" <==> "v.++()"
+
+Post-Increment:
+Vector operator++(int); // "int" is a dummy parameter
+"v++" <==> "v.++(0)"
+
+if we do not use this dummy parameter then compiler cannot tell which one to use
+--> operator must have different argument list
+
+Remark: 
+if we want to implememt pre-increment operator then we MUST write:
+Vector& operator++(); instead of Vector operator++(int);
+
+vice-versa if we want to implememt post-increment operator:
+Vector& operator++(int); instead of Vector operator++();
+
+"v++" == "v.++(0)"
+
+
+Summary of Operator:
+
+A member operator function has an implicit first argument of the class
+
+if the left operand of an operator must be an object of other classes
+then it must be non-member(global) function (e.g. operator<<)
+
+
+Friend functions or classes:
+
+Output operator:
+
+ostream& Vector::operator<<(ostream& os){}
+
+// this is a member function so we can access class's data member
+
+If we implememt this as Globla function?
+
+class Vector
+{
+    friend ostream& operator<< (ostream& os, const Vector& a); // friend declarion
+}
+
+
+ostream& operator<< (ostream& os, const Vector& a){
+    return (os<< a.x << a.y <<endl;)
+} // This is stil a Global Function! but it can access Vector's data member
+
+
+Member access qualifiers (private/public) are irrelevant to friend functions
+--> friend functions can access BOTH public and private data member!
+
+
+All member functions of an X’s friend class can access all data
+members of X.
+
+
+
+Friendship is not symmetric : if A is B's friend , B is not necessarily A's friend!
+
+
+class B{
+    friend Class A;
+    public:
+        void fun(A& a){a.data = 1;} // ERROR! We currently do not know what data members A has!
+        // instead:
+        void fun(A& a); // Only declaration
+}
+
+class A{
+    private:
+    int data;
+}
+
+void B::fun(A& a){a.data = 1;} // Okay! Implememt it aftes class A's declaration
+
+
+
+Friendship is not transitive:
+
+A-friend->B-friend->C 
+then C is not necessarily A's friend!
+
+Friendship is not inherited:
+
+Your parent's friends is not necessarily your friends!

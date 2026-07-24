@@ -1,0 +1,726 @@
+Class member initialization:
+
+constructor:
+
+Word(int f, const char* s){
+    frequency = f;
+    str = s;
+}
+
+
+default constructor:
+
+Word()
+
+conversion constructor:
+
+Word(int f, const char* s){
+    frequency = f;
+    str = s;
+}
+
+copy constructor:
+
+Word(const Word&){
+    ...
+}
+
+
+Word director = "J. Cameron" // implicit conversion constructor
+
+Word director ("J. Cameron") // explicit conversion constructor
+
+Word director {"J. Cameron"} // (C++11) explicit conversion constructor
+
+
+default initializer
+
+class Word{
+    int frequency{0};
+    const char* str{nullptr}
+}
+
+if constructor have not initialized & it is non-static
+then it will be initialized through default initializer
+
+non-static member:  if no "static" keyword then non-static
+
+2.16
+Content:
+1. Conversion constructor
+2. Implicit conversion / explicit keyword
+3. Copy constructor
+4. Copy elision
+
+
+A constructor is called whenever an object is created:
+1. object creation
+2. pass / return by value (actually create a temporary object)
+
+
+class Word
+{
+    public:
+        Word(const char* s){}
+}
+print (Word x){}    // Pass by value
+int main()
+{
+    print("Titanic") // No Error! Why?
+}
+
+-> Implicit Conversion
+
+if A function is PBV (e.g. print (Word x)) ,implicit conversion will generate a temp obj
+if PBR then No implicit conversion
+ 
+"explicit" keyword: Disable implicit conversion
+ 
+Copy constructor
+
+Word(const Word& ){}
+
+Remark:
+1. Deep Copy / Shallow Copy:
+
+if class data member has dynamic memory allocation
+then copy constructor must to use "new" to dynamically allocate memory
+
+otherwise : shallow copy -> then when "destruct", Two object delete the same dynamically allocated obj
+                        -> "Double delete"-> RuntimeError
+
+Complier-generated copy constructor is Shallow copy one!
+
+2. default assignment operator "="
+
+obj2 = obj1; // Memberwise assignment
+            // if we dont overload operator -> Might shallow copy even though we have defined copy constructor
+
+copy constructor
+
+Obj obj2 = obj1; // copy construction
+
+Copy constructor are called when:
+1. Object PBV / RBV --> create a temp Object (No copy elision)
+
+fun_pbv(Word w){};
+call fun_pbv then copy constructor involved;
+
+fun_pbr(const Word& w){};
+fun_pbr(w) ->no constructor involved;
+fun_pbr("abc") -> conversion constructor involved (implicit conversion)
+
+fun_rbv(){
+    ...
+    return obj;  // Here, call copy constructor once;
+}
+
+Obj obj = fun_rbv(); // Here, call copy constructor twice;
+
+2. initialization (using assignment syntax though it is not assignment!)
+
+
+Copy Elision
+
+if No copy elision (RVO):
+
+fun_rbv(){
+    obj = ...;
+    return obj;  // Here, call copy constructor once;
+}
+
+Obj obj = fun_rbv(); // Here, call copy constructor twice;
+
+if RVO:
+
+then function directly use obj as return value -> only 1 time of copy at "Obj obj = fun_rbv()"
+
+
+
+2.23
+Content:
+1. Default constructor
+2. Global/Local Object
+3. "explicit" keyword
+4. RVO (copy elision)
+5. Uniform initialization ( " {} ")
+6. function and constructor overloading
+7. func with default arguments
+8. Member initializer list
+9. Delegating Constructor
+
+
+"Once we define our own constructor than program will NOT generate any constructor"
+
+e.g. X(int n){} in class definition
+int main(){ X obj;} // Error! No Default Constructor! 
+
+如果定义了别的构造函数(非默认构造) 那么compiler-generated默认构造会被覆盖
+
+
+
+Compiler-generated default constructor --- deta members are not initialized
+
+静态初始化 (global)/ 动态初始化 (local)
+
+Global obj (defined outside main/function) -> "0"
+e.g. X arr1[10]; int main(){ ... }
+
+
+Local obj -> Random value (garbage value)
+e.g. int main(){X arr2[10];  }
+ 
+Remark: 
+1. Global object的生命周期是整个程序的运行时间。它在 main() 函数执行之前被构造（初始化），在 main() 函数执行之后被析构。
+2. Global object的存储位置通常存储在程序的静态存储区（静态存储持续时间）。
+3. Local Object的生命周期仅限于该函数或代码块的执行期间
+4. Local Object的存储位置：普通的局部变量：栈上。 / 使用 new 创建的局部指针指向的对象：堆上（但指针本身在栈上）。
+
+
+
+"explicit" Keyword
+
+
+Explicit copy constructor:
+explicit Word(const Word& word){....}
+
+Word w("comp2012") // OK!
+Word w1 = "comp2012" // implicit copy constructor! error
+
+
+void fun_pbr(const Word& w){} // no error when calling, since PBR does not need copy constructor
+void fun_pbv(Word w){}  // ERROR!
+                        // NEED COPY constructor but COPY constructor is declared "explicit"
+**当调用 fun_pbv(w) 时，编译器需要：
+1. 创建函数参数 w（局部变量）
+2. 用实参 w 初始化这个局部变量
+3. 这需要调用拷贝构造函数
+ 
+RBV Retrun by Value:
+Y g() { Y temp ; return temp;}
+void f(Y y){y.print;}
+
+// RVO (copy elision)
+// disable
+// -fno-elide-constructors
+
+
+Example:
+
+int main()
+{
+    Y y2(10,0.5); // conversion constructor
+    Y y3 = y2; // copy constructor
+    f(y3) // pass by value! firstly initialize a new temp obj (by copying)
+    g();
+}
+
+With copy elision
+Output:
+Y(int, float)
+Y(const Y&)
+Y(const Y&)
+
+// WHEN RVO:
+// there is no copy constructor involved when return obj in g()
+// the temp obj will directly be returned
+
+--- Line 1: Y y2(10, 0.5) ---
+Conversion constructor (int, double)
+ 
+--- Line 2: Y y3 = y2 ---
+Copy constructor
+
+--- Line 3: f(y3) ---
+Copy constructor    (为f函数的参数创建副本)
+Print function
+Destructor          (销毁f函数的参数)
+
+--- Line 4: g() ---
+Default constructor (创建temp)
+                    (拷贝省略：直接使用temp作为返回值，没有拷贝)
+Destructor          (销毁temp)
+
+--- End of main ---
+Destructor          (销毁y3)
+Destructor          (销毁y2)
+
+With no copy elision
+
+Y(int, float)
+Y(const Y&)
+Y(const Y&)
+10 0.5
+Y()
+Y(const Y&)
+
+--- Line 1: Y y2(10, 0.5) ---
+Conversion constructor (int, double)
+
+--- Line 2: Y y3 = y2 ---
+Copy constructor
+
+--- Line 3: f(y3) ---
+Copy constructor    (1. 为f函数的参数创建副本)
+Print function
+Destructor          (2. 销毁f函数的参数)
+
+--- Line 4: g() ---
+Default constructor (3. 创建temp)
+Copy constructor    (4. 将temp拷贝到返回值临时对象) // RVO OFF!
+Destructor          (5. 销毁temp)
+Destructor          (6. 销毁返回对象)
+
+--- End of main ---
+Destructor          (7. 销毁y3)
+Destructor          (8. 销毁y2)
+
+
+Uniform initialization
+
+() , {} , =
+
+// Conversion Constructor
+Word w1('A')
+Word w2{'B'}
+
+' = ' does not always mean assignment!
+ e.g. Word word1 = word2 // Copy Construction!
+
+
+What is this ? 
+Word w();
+--> Function declaration! doing nothing
+Word w{};
+--> Good! default initialization
+
+
+int main () { int a(1); } // No error , equals to "int a = 1" 
+class A() { private: int a(1);} // Error!
+
+Why?
+在 C++ 的语法规则里，圆括号 () 不能被用于指定类内非静态数据成员的默认值。
+--> Reason : Complier cannot tell whether it is a data member OR a "Member function" !
+
+Remark:
+
+A a(); // define a function : not initialization!
+A a(1); // A(int): initialization!
+
+
+
+Function and constructor overloading
+
+
+e.g. :
+
+class Word /* File: overload-constructor.cpp */
+{
+ private:
+ int frequency;
+ char* str;
+
+public:
+
+ // Function overloading!
+
+ Word(); // Default constructor
+ Word(const char* s = nullptr, int k = 1); //conversion constructor
+ Word(const Word& w); // Copy constructor
+ }
+
+Word w1; // Error! since Complier cannot tell which consturctor is used (conversion or default)
+
+
+
+Operator overloading -> Later chapter
+
+Constructor with default arguments
+
+Word()
+Word( const chat* s = nullptr , int k = 1) // can only declare default argument ONCE!
+
+int main(){
+     Word w; // cannot decide! program failed
+     Word w(); // No Error! function declaration
+}
+
+
+
+
+Member initializer list
+
+class XYZ{
+private : X x, Y y, Z z;
+...
+}
+
+when initializing:
+X()
+Y()
+Z()
+XYZ() 
+
+the order is not depend on the order of MIL
+the order is ONLY depend on the order in "private"
+// private:
+X x;
+Y y;
+Z z;
+then X(), Y() ,Z(), XYZ()
+
+Remarks:
+if we are constructing self-defined data member in MIL , 
+We are definitely going to use "Constructor" , no assignment involved
+"如果data member 都没有被完全构造,怎么会有"赋值"呢?“
+
+Const Data member: 
+const or reference members MUST be initialized using member
+initializer list OR initializer if they don’t have default initializers
+
+i.e. cannot initialize const/reference inside constructor!
+
+e.g. 
+private : const int a = 3.14; // Okay
+          int& b = a ;//Okay
+
+A(): a(3.14) , b(a) // Okay {
+
+    a = 3.14; // ERROR!
+    b = a; // ERROR!
+}
+
+
+Delegating constructor
+
+X(int n): X(),n{n}{}; // ERROR!! delegating constructor must be the ONLY thing in MIL
+X(int n): X() {} // Good
+
+
+
+2.25
+Content:
+1. Memory layout
+2. GARBAGE COLLECTION & DESTRUCTOR
+3. Problem with member-wise assignment & Destructor
+4. Construction and Destruction Order
+
+
+
+
+
+Memory layout of a running program
+
+static -----> | stack   | ---- local variable // automatically delete
+              |         |
+              |         |
+              |         |
+              |         |
+                 ...
+dynamic------>| heap    |  ---- dynamically allocated Memory // need manually delete!
+                                                            /// Otherwise memory leak!
+
+GARBAGE COLLECTION & DESTRUCTOR
+
+1. Default Destructor (compiler generated): X::~X(){} 
+// doing nothing
+// since static data member will be delete automatically
+
+
+Problem with member-wise assignment & Destructor
+
+class Word{
+    private:
+        int frequency;
+        char* str;  // dynamic allocate 
+    public:
+        ...
+}
+void Bug(Word& x) 
+{ 
+Word bug("bug",4); 
+x = bug; // compiler-generated default assignment operator ->shallow copy!
+}
+
+int main()
+{ 
+
+Word movie{"Titanic"}; 
+
+// Now , movie.str points to "Titanic" 
+
+Bug(movie);
+// Since x = bug, Now , movie.str points to "bug"
+// TWO PROBLEMS:
+// 1. We LOST the address of "Titanic" --> it cannot be deleted --> Memory leak
+// 2. movie.str points to "bug" , But "bug" is a local object, will be deleted when Bug(); end
+// --> movie.str becomes Dangling Pointer! --> when Main() end, DOUBLE DELETE!
+return 0;
+}
+
+So , IF We have dynamically allocated memory in Class ,
+ We have to define Copy Constructor & Assignment operator!
+ 
+
+X() = default;
+X() = delete;
+~X() = default;
+~X() = delete;
+...
+
+compiler can generate:
+1. default constructor
+2. (copy) assignment constructor
+3. assignment operator
+4. move constructor
+5. (move) assignment constructor
+6. default destructor
+
+Construction and Destruction Order:
+
+"destruction order = reverse order of construction"
+
+Construction with "new"
+
+Postoffice(){cout<<"Postoffice Constructor"<<endl; clock = new Clock;}
+// Output: 
+Postoffice Constructor 
+Clock Constructor 
+
+Postoffice(){clock = new Clock;cout<<"Postoffice Constructor"<<endl;}
+// Output: 
+Clock Constructor 
+Postoffice Constructor 
+
+
+         
+
+“const" :
+权限缩小 合法(e.g. const int& b = a;)
+权限放大 不合法
+
+
+shallow copy : if class has dynamic class Member, and we are using compiler-generated copy constructor
+--> double delete
+
+
+X(int n){} // here , we define a constructor
+// the class has no compiler-generated default constructor
+// then " X a; " will return an error!
+
+X() = default; // keep the default constructor
+
+// but the compiler will still generate copy constructor
+// unless X(const X& a) = delete;
+
+
+X something = 10;
+// X(10);
+// X(const X& x)
+// ~X() ---> delete X(10), the temporary object
+
+X something2 {10}
+
+
+3.2
+Content:
+1. implicit/explicit conversion
+2. temporary object 
+3. copy elision
+4. construction/destruction order
+
+
+X obj = X(); // syntax correct!
+
+
+X something1 = 10; // implicit conversion ( firstly create “temp obj” (implicit) X(10))
+                   // assignment syntax (but actually still initialization)
+X something2 {10}; // explicit conversion ( directly call X(10) )
+                   // initialization syntax
+
+With copy elision ON:
+
+"""
+Creating something1:
+X(10)
+after something1 defined:
+Defining something2:
+X(10)
+after something2 defined:
+~X();
+~X();
+"""
+
+With copy elision OFF:
+
+"""
+Creating something1:
+X(10)
+~X() <-------------difference! // Delete the temporary OBJ! 
+
+after something1 defined:
+Defining something2
+X(10)
+after something2 defined:
+~X();  // delete something2
+~X(); // delete something1
+"""
+
+_________Why?:___________
+What happened:
+
+X  __temp = X(10); // implicit conversion 
+X something1(__temp); // complier-generated copy constructor
+delete __temp; // call destructor, delete the temp obj
+_________________________
+
+
+
+
+Temporary Object : something with a "very short life" 
+
+X obj = X(); // X() is a Temporary Object
+
+Output:
+
+X() , address_temp_obj
+X( constX& ) , address_obj
+~X() , address_temp_obj // when the initialization end
+~X() , address_obj // when return
+
+
+Construction/destruction order
+
+Ordinary order:
+"destruction order = reverse order of construction"
+
+
+Special Case:
+
+1. Member-wise Assignment in Constructor
+
+class Postoffice{
+    private:
+        Clock clock;
+    public:
+        Postoffice::Postoffice()
+        {
+            cout << " Postoffice Constructor " <<endl;
+            clock = Clock(800); // Assignment in constructor
+        }
+}
+Output:
+
+Beginning of initialization:
+Clock Constructor   // call clock's default constructor FIRST, 
+                    // even though there is a "clock = Clock(800);" in Postoffice constructor
+Postoffice Constructor
+
+// then deal with clock = Clock(800)
+Clock Constructor at 800
+                    // create temp obj
+                    // assignment operator (compiler-generated)
+Clock destructor
+                    // temp obj being destructed
+End of initialization
+
+
+2. Assignment in "private"
+
+class B {
+    private:
+     A b2 = 10;
+    ....
+    public:
+    B(){...}   
+}
+
+Output:
+A();
+A(const A&);
+~A();
+B();
+~B();
+~A();
+
+"Assignment syntax"( e.g. A = B )都会创造temp object! 
+如果copy elision off 那么会直接调用destructor删除temp object
+
+
+
+3. Assignment in Both "private" and "MIL"
+"如果成员在MIL中出现，类内初始值被忽略"
+
+class B {
+    private:
+     A a2 = 10;
+    ....
+    public:
+    B():A(20){...}    // Then b.a2 = 20
+}
+
+Constructor内赋值的优先级(从低到高): 1. private内赋值 2. MIL 3. Constructor内赋值
+
+
+4. Construction with Array
+
+Word weather[] = {"sunny","cloudy","rainy"}
+
+output:
+
+with copy elision:
+
+conversion: sunny
+conversion: cloudy
+conversion: rainy
+
+after main:
+
+~Word():rainy
+~Word():cloudy
+~Word():sunny
+
+Without copy elision:
+
+Case 1 :
+if there are no self-defined copy constructor  --> Crash! 
+Complier-generated copy constructor--> Shallow copy!
+--> Double Delete --> Crash
+
+
+Case 2(We have self-defined copy constructor):
+
+conversion: sunny
+copy : sunny
+conversion: cloudy
+copy : cloudy
+conversion: rainy
+copy : rainy
+~Word():rainy // delete temp object
+~Word():cloudy // delete temp object
+~Word():sunny // delete temp object
+
+after main:
+
+~Word():rainy
+~Word():cloudy
+~Word():sunny
+
+"""
+Why?:
+这种行为是由 C++ 的完整表达式规则决定的：临时对象的生命周期通常持续到包含它的"完整表达式"结束，而不是在每个子表达式结束后就立即销毁。
+完整表达式:                                                        ~~~~~~~~~~.          
+Word weather[] = {"sunny","cloudy","rainy"}
+子表达式: 
+Word weather1(tempObj("sunny")),
+Word weather2(tempObj("cloudy")),
+Word weather1(tempObj("rainy"))
+"""
+
+Remarks:
+Word weather[3] = {};
+weather[0] = "sunny" // assignment operator Okay
+weather[0]{"sunny} //error!
+
+"列表初始化 (initialization syntax) 只能用于“创建对象”，不能用于修改已存在的对象"
+
