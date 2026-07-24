@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HW4_solutions</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<h1 id="elec2600-homework-4-solutions">ELEC2600 Homework 4
+Solutions</h1>
+<h2 id="question-1">Question 1</h2>
+<p>Let the lifetime of each device have mean <span
+class="math inline">\(\mu\)</span> and standard deviation <span
+class="math inline">\(\sigma=2\)</span>. By the Central Limit
+Theorem,</p>
+<p><span class="math display">\[
+\bar X_n \approx \mathcal N\left(\mu,\frac{\sigma^2}{n}\right)
+=\mathcal N\left(\mu,\frac{4}{n}\right).
+\]</span></p>
+<h3 id="section">(1.1)</h3>
+<p>We want</p>
+<p><span class="math display">\[
+P(|\bar X_n-\mu|\le 0.05)\ge 0.96.
+\]</span></p>
+<p>Standardizing,</p>
+<p><span class="math display">\[
+P\left(\left|Z\right|\le \frac{0.05}{2/\sqrt n}\right)\ge 0.96.
+\]</span></p>
+<p>Since <span class="math inline">\(P(|Z|\le z)=0.96\)</span>, we need
+<span class="math inline">\(z=z_{0.98}\approx 2.0537\)</span>. Hence</p>
+<p><span class="math display">\[
+\frac{0.05\sqrt n}{2}\ge 2.0537
+\quad\Longrightarrow\quad
+n\ge \left(\frac{2\times 2.0537}{0.05}\right)^2 \approx 6748.62.
+\]</span></p>
+<p>Therefore, the required sample size is</p>
+<p><span class="math display">\[
+\boxed{n=6749}.
+\]</span></p>
+<h3 id="section-1">(1.2)</h3>
+<p>Now <span class="math inline">\(\mu=8\)</span> and <span
+class="math inline">\(n=2500\)</span>, so</p>
+<p><span class="math display">\[
+\bar X_{2500}\approx \mathcal N\left(8,\frac{4}{2500}\right),
+\]</span></p>
+<p>with standard deviation</p>
+<p><span class="math display">\[
+\frac{2}{\sqrt{2500}}=\frac{2}{50}=0.04.
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+P(|\bar X_{2500}-8|\le 0.05)
+=P\left(|Z|\le \frac{0.05}{0.04}\right)
+=P(|Z|\le 1.25).
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+P(|\bar X_{2500}-8|\le 0.05)=2\Phi(1.25)-1\approx 0.7887.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P(|\bar X_{2500}-8|\le 0.05)\approx 0.7887.}
+\]</span></p>
+<h2 id="question-2">Question 2</h2>
+<p>Given a Poisson process with rate <span
+class="math inline">\(\lambda=80\)</span> customers/hour.</p>
+<p>For time interval <span class="math inline">\(t\)</span> hours,</p>
+<p><span class="math display">\[
+N(t)\sim \text{Poisson}(\lambda t).
+\]</span></p>
+<h3 id="section-2">(2.1)</h3>
+<p>The first 9 minutes is <span
+class="math inline">\(t=9/60=0.15\)</span> hours, so</p>
+<p><span class="math display">\[
+\lambda t = 80(0.15)=12.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+P(N(9\text{ min})=10)=e^{-12}\frac{12^{10}}{10!}.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P= e^{-12}\frac{12^{10}}{10!}\approx 0.10484.}
+\]</span></p>
+<h3 id="section-3">(2.2)</h3>
+<p>The next 21 minutes is <span
+class="math inline">\(21/60=0.35\)</span> hours, so its mean is</p>
+<p><span class="math display">\[
+80(0.35)=28.
+\]</span></p>
+<p>By independent increments,</p>
+<p><span class="math display">\[
+P(N(9\text{ min})=10 \text{ and next 21 min has }30)
+=\left(e^{-12}\frac{12^{10}}{10!}\right)\left(e^{-28}\frac{28^{30}}{30!}\right).
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P=\left(e^{-12}\frac{12^{10}}{10!}\right)\left(e^{-28}\frac{28^{30}}{30!}\right)\approx
+0.00710.}
+\]</span></p>
+<h3 id="section-4">(2.3)</h3>
+<p>The waiting time of the first customer <span
+class="math inline">\(T_1\)</span> is exponential with rate <span
+class="math inline">\(80\)</span>/hour. For 1 minute,</p>
+<p><span class="math display">\[
+t=\frac{1}{60}\text{ hour}.
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+P(T_1&lt;1\text{ min})=1-e^{-80/60}.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P=1-e^{-4/3}\approx 0.73640.}
+\]</span></p>
+<h3 id="section-5">(2.4)</h3>
+<p><span class="math display">\[
+P(1&lt;T_1&lt;10\text{ min})
+=P(T_1&gt;1\text{ min})-P(T_1&gt;10\text{ min})
+\]</span></p>
+<p><span class="math display">\[
+=e^{-80/60}-e^{-800/60}.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P=e^{-4/3}-e^{-40/3}\approx 0.26360.}
+\]</span></p>
+<h3 id="section-6">(2.5)</h3>
+<p>The second arrival time <span class="math inline">\(T_2\)</span>
+satisfies</p>
+<p><span class="math display">\[
+P(T_2&lt;t)=P(N(t)\ge 2).
+\]</span></p>
+<p>For <span class="math inline">\(t=3\)</span> minutes <span
+class="math inline">\(=3/60=0.05\)</span> hour, the mean is</p>
+<p><span class="math display">\[
+\lambda t =80(0.05)=4.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+P(T_2&lt;3\text{ min})=1-P(N(3\text{ min})=0)-P(N(3\text{ min})=1)
+\]</span></p>
+<p><span class="math display">\[
+=1-e^{-4}-4e^{-4}
+=1-5e^{-4}.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P=1-5e^{-4}\approx 0.90842.}
+\]</span></p>
+<h2 id="question-3">Question 3</h2>
+<p>Let <span class="math inline">\(I_i=1\)</span> if the <span
+class="math inline">\(i\)</span>th draw is a Jack, and <span
+class="math inline">\(I_i=0\)</span> otherwise. Since there are 4 Jacks
+in 52 cards,</p>
+<p><span class="math display">\[
+p=P(I_i=1)=\frac{4}{52}=\frac{1}{13}.
+\]</span></p>
+<p>Each win is $5, so</p>
+<p><span class="math display">\[
+S_n = 5\sum_{i=1}^n I_i.
+\]</span></p>
+<p>Thus <span class="math inline">\(\sum_{i=1}^n I_i\sim
+\text{Binomial}(n,1/13)\)</span>.</p>
+<h3 id="section-7">(3.1)</h3>
+<p><span class="math display">\[
+E[S_{13}] = 5E\left[\sum_{i=1}^{13}I_i\right]
+=5\cdot 13\cdot \frac{1}{13}=5.
+\]</span></p>
+<p>Also,</p>
+<p><span class="math display">\[
+\operatorname{Var}(S_{13})
+=25\operatorname{Var}\left(\sum_{i=1}^{13}I_i\right)
+=25\cdot 13\cdot \frac{1}{13}\left(1-\frac{1}{13}\right)
+=25\cdot \frac{12}{13}.
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+\boxed{E[S_{13}]=5, \qquad \operatorname{Var}(S_{13})=\frac{300}{13}.}
+\]</span></p>
+<p>Now</p>
+<p><span class="math display">\[
+S_{20}=S_{13}+(S_{20}-S_{13}),
+\]</span></p>
+<p>and the increment <span class="math inline">\(S_{20}-S_{13}\)</span>
+is independent of <span class="math inline">\(S_{13}\)</span>.
+Therefore,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(S_{13},S_{20})
+=\operatorname{Cov}(S_{13},S_{13})+\operatorname{Cov}(S_{13},S_{20}-S_{13})
+=\operatorname{Var}(S_{13}).
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\boxed{\operatorname{Cov}(S_{13},S_{20})=\frac{300}{13}.}
+\]</span></p>
+<h3 id="section-8">(3.2)</h3>
+<p>Winning $30 in 15 games means exactly 6 Jacks in 15 draws. Hence</p>
+<p><span class="math display">\[
+\boxed{P(S_{15}=30)=\binom{15}{6}\left(\frac{1}{13}\right)^6\left(\frac{12}{13}\right)^9.}
+\]</span></p>
+<h3 id="section-9">(3.3)</h3>
+<p><span class="math inline">\(S_{20}=80\)</span> means 16 Jacks in 20
+games, while <span class="math inline">\(S_{15}=30\)</span> means 6
+Jacks in the first 15 games. The last 5 games can contribute at most 5
+more Jacks, so this is impossible. Therefore,</p>
+<p><span class="math display">\[
+\boxed{P(S_{20}=80\mid S_{15}=30)=0.}
+\]</span></p>
+<h3 id="section-10">(3.4)</h3>
+<p>Since the event is impossible,</p>
+<p><span class="math display">\[
+\boxed{P(S_{20}=80\cap S_{15}=30)=0.}
+\]</span></p>
+<h3 id="section-11">(3.5)</h3>
+<p>Starting with $10 and paying $2 per game, after 5 games the net
+amount is</p>
+<p><span class="math display">\[
+S_5 = 10 - 2(5) + 5W = 5W,
+\]</span></p>
+<p>where <span class="math inline">\(W\sim
+\text{Binomial}(5,1/13)\)</span> is the number of Jacks in 5 games.</p>
+<p>We need <span class="math inline">\(S_5&gt;0\)</span>, i.e. <span
+class="math inline">\(W\ge 1\)</span>. Thus</p>
+<p><span class="math display">\[
+\boxed{P(S_5&gt;0)=1-\left(\frac{12}{13}\right)^5.}
+\]</span></p>
+<h3 id="section-12">(3.6)</h3>
+<p>Starting with $12 and paying $2 per game, after 20 games the net
+amount is</p>
+<p><span class="math display">\[
+S_{20}=12-2(20)+5W=-28+5W,
+\]</span></p>
+<p>where <span class="math inline">\(W\sim
+\text{Binomial}(20,1/13)\)</span>.</p>
+<p>We need</p>
+<p><span class="math display">\[
+-28+5W&gt;0 \quad\Longrightarrow\quad W\ge 6.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{P(S_{20}&gt;0)=\sum_{k=6}^{20}\binom{20}{k}\left(\frac{1}{13}\right)^k\left(\frac{12}{13}\right)^{20-k}.}
+\]</span></p>
+<h2 id="question-4">Question 4</h2>
+<p>For <span class="math inline">\(i\ge 2\)</span>,</p>
+<p><span class="math display">\[
+Y_i=X_i-\frac12 X_{i-1}.
+\]</span></p>
+<h2 id="x_i-i.i.d.-ex_i400-operatornamevarx_i8000">(4.1) <span
+class="math inline">\(X_i\)</span> i.i.d., <span
+class="math inline">\(E[X_i]=400\)</span>, <span
+class="math inline">\(\operatorname{Var}(X_i)=8000\)</span></h2>
+<h3 id="mean">Mean</h3>
+<p><span class="math display">\[
+E[Y_i]=E[X_i]-\frac12E[X_{i-1}]
+=400-\frac12(400)=200.
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+\boxed{\mu_Y=200.}
+\]</span></p>
+<h3 id="autocovariance">Autocovariance</h3>
+<p>Let <span class="math inline">\(m=j-k\)</span>. Since the <span
+class="math inline">\(X_i\)</span> are i.i.d.,</p>
+<p><span class="math display">\[
+C_Y(m)=\operatorname{Cov}(Y_j,Y_k)
+=\operatorname{Cov}\left(X_j-\frac12X_{j-1},\,X_k-\frac12X_{k-1}\right).
+\]</span></p>
+<p>Only equal-time terms survive.</p>
+<p>For <span class="math inline">\(m=0\)</span>,</p>
+<p><span class="math display">\[
+C_Y(0)=\operatorname{Var}(X_j)+\frac14\operatorname{Var}(X_{j-1})
+=8000+\frac14(8000)=10000.
+\]</span></p>
+<p>For <span class="math inline">\(|m|=1\)</span>,</p>
+<p><span class="math display">\[
+C_Y(m)= -\frac12\operatorname{Var}(X)= -\frac12(8000)=-4000.
+\]</span></p>
+<p>For <span class="math inline">\(|m|&gt;1\)</span>,</p>
+<p><span class="math display">\[
+C_Y(m)=0.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\boxed{
+C_Y(m)=
+\begin{cases}
+10000, &amp; m=0,\\
+-4000, &amp; |m|=1,\\
+0, &amp; |m|&gt;1.
+\end{cases}}
+\]</span></p>
+<h3 id="autocorrelation">Autocorrelation</h3>
+<p>Using <span
+class="math inline">\(R_Y(m)=E[Y_jY_{j+m}]=C_Y(m)+\mu_Y^2\)</span> and
+<span class="math inline">\(\mu_Y=200\)</span>,</p>
+<p><span class="math display">\[
+\boxed{
+R_Y(m)=
+\begin{cases}
+50000, &amp; m=0,\\
+36000, &amp; |m|=1,\\
+40000, &amp; |m|&gt;1.
+\end{cases}}
+\]</span></p>
+<h2 id="x_i-gaussian-wss-ex_i400-c_xm8000e-m">(4.2) <span
+class="math inline">\(X_i\)</span> Gaussian WSS, <span
+class="math inline">\(E[X_i]=400\)</span>, <span
+class="math inline">\(C_X(m)=8000e^{-|m|}\)</span></h2>
+<h3 id="mean-1">Mean</h3>
+<p><span class="math display">\[
+E[Y_i]=400-\frac12(400)=200.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{\mu_Y=200.}
+\]</span></p>
+<h3 id="autocovariance-1">Autocovariance</h3>
+<p>For lag <span class="math inline">\(m\)</span>,</p>
+<p><span class="math display">\[
+C_Y(m)=\operatorname{Cov}(Y_i,Y_{i+m})
+\]</span></p>
+<p><span class="math display">\[
+=\operatorname{Cov}\left(X_i-\frac12X_{i-1},\,X_{i+m}-\frac12X_{i+m-1}\right)
+\]</span></p>
+<p><span class="math display">\[
+=C_X(m)-\frac12C_X(m-1)-\frac12C_X(m+1)+\frac14C_X(m).
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+\boxed{C_Y(m)=\frac54\,C_X(m)-\frac12\,C_X(m-1)-\frac12\,C_X(m+1).}
+\]</span></p>
+<p>Substituting <span
+class="math inline">\(C_X(m)=8000e^{-|m|}\)</span>,</p>
+<p><span class="math display">\[
+\boxed{
+C_Y(m)=10000e^{-|m|}-4000e^{-|m-1|}-4000e^{-|m+1|}.}
+\]</span></p>
+<p>In particular, the variance is</p>
+<p><span class="math display">\[
+\operatorname{Var}(Y_i)=C_Y(0)=10000-8000e^{-1}.
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+\boxed{\operatorname{Var}(Y_i)=10000-8000e^{-1}.}
+\]</span></p>
+<h3 id="autocorrelation-1">Autocorrelation</h3>
+<p>Again,</p>
+<p><span class="math display">\[
+R_Y(m)=C_Y(m)+\mu_Y^2=C_Y(m)+40000.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\boxed{R_Y(m)=40000+10000e^{-|m|}-4000e^{-|m-1|}-4000e^{-|m+1|}.}
+\]</span></p>
+<h2 id="joint-pdf-of-y_2-and-y_3">(4.3) Joint pdf of <span
+class="math inline">\(Y_2\)</span> and <span
+class="math inline">\(Y_3\)</span></h2>
+<p>Because <span class="math inline">\((X_i)\)</span> is a Gaussian
+process and <span class="math inline">\((Y_2,Y_3)\)</span> is a linear
+transformation of Gaussian variables, <span
+class="math inline">\((Y_2,Y_3)\)</span> is jointly Gaussian.</p>
+<p>Its mean vector is</p>
+<p><span class="math display">\[
+\boldsymbol\mu=
+\begin{bmatrix}
+200\\
+200
+\end{bmatrix}.
+\]</span></p>
+<p>Its covariance matrix is</p>
+<p><span class="math display">\[
+\Sigma=
+\begin{bmatrix}
+\sigma_Y^2 &amp; C_Y(1)\\
+C_Y(1) &amp; \sigma_Y^2
+\end{bmatrix},
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\sigma_Y^2=C_Y(0)=10000-8000e^{-1},
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+C_Y(1)=10000e^{-1}-4000-4000e^{-2}.
+\]</span></p>
+<p>Therefore, the joint pdf is</p>
+<p><span class="math display">\[
+\boxed{
+f_{Y_2,Y_3}(y_2,y_3)
+=\frac{1}{2\pi |\Sigma|^{1/2}}
+\exp\left(
+-\frac12
+\begin{bmatrix}
+y_2-200 &amp; y_3-200
+\end{bmatrix}
+\Sigma^{-1}
+\begin{bmatrix}
+y_2-200\\
+y_3-200
+\end{bmatrix}
+\right).}
+\]</span></p>
+<h2 id="question-5">Question 5</h2>
+<p>Since <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are jointly Gaussian, any linear
+combination is also Gaussian. Let</p>
+<p><span class="math display">\[
+Z=X-2Y.
+\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+E[Z]=E[X]-2E[Y]=5-2(2)=1.
+\]</span></p>
+<p>Also,</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z)=\operatorname{Var}(X)+4\operatorname{Var}(Y)-4\operatorname{Cov}(X,Y).
+\]</span></p>
+<h2 id="x-and-y-uncorrelated">(5.1) <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> uncorrelated</h2>
+<p>Since jointly Gaussian and uncorrelated implies independent,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X,Y)=0.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z)=0.2+4(0.4)=1.8.
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+Z\sim \mathcal N(1,1.8).
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{
+f_Z(z)=\frac{1}{\sqrt{2\pi(1.8)}}
+\exp\left(-\frac{(z-1)^2}{2(1.8)}\right),\qquad -\infty&lt;z&lt;\infty.}
+\]</span></p>
+<h2 id="correlation-coefficient-rho0.4">(5.2) Correlation coefficient
+<span class="math inline">\(\rho=0.4\)</span></h2>
+<p>Now</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X,Y)=\rho\,\sigma_X\sigma_Y
+=0.4\sqrt{0.2}\sqrt{0.4}.
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z)=0.2+4(0.4)-4\left(0.4\sqrt{0.2}\sqrt{0.4}\right).
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+Z\sim \mathcal N\left(1,\;0.2+1.6-1.6\sqrt{0.08}\right).
+\]</span></p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z)=\frac{45-8\sqrt 2}{25}.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\boxed{
+f_Z(z)=\frac{1}{\sqrt{2\pi\left(\frac{45-8\sqrt2}{25}\right)}}
+\exp\left(-\frac{(z-1)^2}{2\left(\frac{45-8\sqrt2}{25}\right)}\right),\qquad
+-\infty&lt;z&lt;\infty.}
+\]</span></p>
+</body>
+</html>
