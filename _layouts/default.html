@@ -13,6 +13,8 @@
         <a class="brand" href="{{ '/' | relative_url }}">GUO Yiheng</a>
         <div class="nav-links">
           <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>About</a>
+          <a href="{{ '/music/' | relative_url }}" {% if page.url == '/music/' %}aria-current="page"{% endif %}>Music</a>
+          <a href="{{ '/mynotes/' | relative_url }}" {% if page.url == '/mynotes/' %}aria-current="page"{% endif %}>Notes</a>
         </div>
       </nav>
     </header>
