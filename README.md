@@ -1,4 +1,3 @@
 # ethanih.github.io
 
-Personal website for GUO Yiheng.
-
+我去!我是谁?
