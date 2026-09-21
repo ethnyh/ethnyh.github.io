@@ -1,3 +1,10 @@
+- course: PHYS1002
+- course: COMP4421
+  notes:
+    - title: "Image Fundamentals"
+      file: /assets/lecture_note/COMP4421/Fundamentals.pdf
+    - title: "Image Transformation"
+      file: 
 - course: MATH2033
   notes:
     - title: "Real Number System"
