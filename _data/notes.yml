@@ -1,9 +1,23 @@
+- course: MATH2033
+  notes:
+    - title: "Real Number System"
+      file: /assets/lecture_note/MATH2033/Real Number System.pdf
+    - title: "Sequence & Limit"
+      file: 
+- course: MATH2351
+  notes:
+    - title: "L1-L4"
+      file: /assets/lecture_note/MATH2351/Lecture1-4.pdf
+    - title: "L4-L8"
+      file: 
 - course: COMP4212
   notes:
     - title: "RL Basics"
       file: /assets/lecture_note/COMP4212/RL Basic.pdf
-
-
+    - title: "Multi-armed Bandit"
+      file: /assets/lecture_note/COMP4212/Multi-armed Bandit.pdf
+    - title: "Markov Decision Process"
+      file:
 - course: ELEC 2600
   notes:
     - title: "Part 1: Basic Probability "
