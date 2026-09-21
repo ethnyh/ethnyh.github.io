@@ -1,13 +1,39 @@
 :root {
-  --bg: #2f3437;
-  --surface: #3b4145;
-  --ink: #f2f4f5;
-  --muted: #c4cbd0;
-  --line: #545d62;
-  --accent: #5eead4;
-  --accent-strong: #99f6e4;
-  --warm: #fbbf24;
+  --bg: #ffffff;
+  --surface: #f6f8fa;
+  --ink: #1f2328;
+  --muted: #59636e;
+  --line: #d1d9e0;
+  --accent: #0969da;
+  --accent-strong: #0550ae;
+  --success: #1f883d;
+  --header-bg: #25292e;
+  --header-ink: #ffffff;
+  --header-muted: #f0f3f6;
+  --focus-ring: rgba(9, 105, 218, 0.32);
+  --player-bg: rgba(246, 248, 250, 0.96);
+  --shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
   color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --ink: #e6edf3;
+    --muted: #8d96a0;
+    --line: #30363d;
+    --accent: #58a6ff;
+    --accent-strong: #79c0ff;
+    --success: #3fb950;
+    --header-bg: #010409;
+    --header-ink: #f0f6fc;
+    --header-muted: #b1bac4;
+    --focus-ring: rgba(88, 166, 255, 0.4);
+    --player-bg: rgba(22, 27, 34, 0.96);
+    --shadow: 0 8px 24px rgba(1, 4, 9, 0.6);
+    color-scheme: dark;
+  }
 }
 
 * {
@@ -33,21 +59,22 @@ body {
 }
 
 a {
-  color: var(--accent-strong);
+  color: var(--accent);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
 }
 
 a:hover {
-  color: var(--warm);
+  color: var(--accent-strong);
 }
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid var(--line);
-  background: rgba(47, 52, 55, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--header-bg);
+  background: color-mix(in srgb, var(--header-bg) 94%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -62,12 +89,13 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
+  min-height: 68px;
   gap: 18px;
 }
 
 .brand {
-  color: var(--ink);
+  color: var(--header-ink);
+  font-size: 1.08rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -79,15 +107,16 @@ a:hover {
 
 .nav-links a {
   border-radius: 6px;
-  color: var(--muted);
-  padding: 5px 8px;
+  color: var(--header-muted);
+  font-size: 1rem;
+  padding: 7px 10px;
   text-decoration: none;
 }
 
 .nav-links a[aria-current="page"],
 .nav-links a:hover {
-  background: var(--surface);
-  color: var(--ink);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--header-ink);
 }
 
 .page {
@@ -103,7 +132,7 @@ a:hover {
 }
 
 .eyebrow {
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -146,6 +175,7 @@ h3 {
 .profile img {
   aspect-ratio: 1;
   border-radius: 8px;
+  border: 1px solid var(--line);
   display: block;
   object-fit: cover;
   width: 100%;
@@ -258,8 +288,13 @@ h3 {
 }
 
 .note-list a {
+  color: var(--ink);
   display: block;
   min-height: 28px;
+}
+
+.note-list a:hover {
+  color: var(--accent);
 }
 
 .note-unavailable {
@@ -292,9 +327,7 @@ h3 {
 
 .music-card {
   appearance: none;
-  background:
-    linear-gradient(135deg, rgba(94, 234, 212, 0.1), rgba(251, 191, 36, 0.08)),
-    var(--surface);
+  background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 10px;
   color: inherit;
@@ -315,16 +348,16 @@ h3 {
 .music-card:focus-visible,
 .music-card.is-active {
   border-color: var(--accent);
-  transform: translateY(-1px);
+  background: var(--surface);
 }
 
 .music-card:focus-visible {
-  outline: 2px solid rgba(94, 234, 212, 0.32);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
 .music-card-index {
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -349,7 +382,7 @@ h3 {
 
 .music-card-action {
   align-self: center;
-  color: var(--warm);
+  color: var(--success);
   font-size: 0.82rem;
   font-weight: 700;
   white-space: nowrap;
@@ -375,11 +408,11 @@ h3 {
 
 .music-player-shell {
   align-items: center;
-  background: rgba(59, 65, 69, 0.96);
+  background: var(--player-bg);
   border: 1px solid var(--line);
   border-radius: 12px;
   bottom: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow);
   display: grid;
   gap: 16px;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
@@ -398,7 +431,7 @@ h3 {
 }
 
 .music-player-label {
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -438,7 +471,8 @@ h3 {
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
-    padding: 9px 0;
+    min-height: auto;
+    padding: 12px 0;
   }
 
   .hero {

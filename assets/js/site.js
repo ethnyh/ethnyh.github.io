@@ -42,4 +42,15 @@ if (musicPage) {
       loadTrack(button);
     });
   });
+
+  player?.addEventListener("ended", () => {
+    const currentIndex = trackButtons.findIndex((button) =>
+      button.classList.contains("is-active"),
+    );
+    const nextButton = trackButtons[currentIndex + 1];
+
+    if (nextButton) {
+      loadTrack(nextButton);
+    }
+  });
 }
