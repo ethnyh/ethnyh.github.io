@@ -1,4 +1,9 @@
 - course: PHYS1002
+  notes:
+    - title: "Introduction"
+      file:
+    - title: "Solar System"
+      file:
 - course: COMP4421
   notes:
     - title: "Image Fundamentals"
@@ -13,9 +18,9 @@
       file: 
 - course: MATH2351
   notes:
-    - title: "L1-L4"
+    - title: "Complex Number / First-Order ODE"
       file: /assets/lecture_note/MATH2351/Lecture1-4.pdf
-    - title: "L4-L8"
+    - title: "Second-Order ODE"
       file: 
 - course: COMP4212
   notes:
