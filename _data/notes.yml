@@ -1,7 +1,7 @@
 - course: PHYS1002
   notes:
     - title: "Introduction"
-      file:
+      file: /assets/lecture_note/PHYS1002/Introduction 2.pdf
     - title: "Solar System"
       file:
 - course: COMP4421
