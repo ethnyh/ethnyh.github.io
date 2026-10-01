@@ -2,14 +2,18 @@
   notes:
     - title: "Introduction"
       file: /assets/lecture_note/PHYS1002/Introduction 2.pdf
-    - title: "Solar System"
-      file:
+    - title: "Earth/Moon/Sun"
+      file: /assets/lecture_note/Solar System 2.pdf
+    - title: "Planets/Solar System/Space Missions"
 - course: COMP4421
   notes:
     - title: "Image Fundamentals"
       file: /assets/lecture_note/COMP4421/Fundamentals.pdf
     - title: "Image Transformation"
-      file: 
+      file: /assets/lecture_note/Image Transformation.pdf
+    - title: "Spacial Flitering"
+      file: assets/lecture_note/Spatial Filtering.pdf
+    - title: "Frequency Flitering"
 - course: MATH2033
   notes:
     - title: "Real Number System"
@@ -18,7 +22,7 @@
       file: 
 - course: MATH2351
   notes:
-    - title: "Complex Number / First-Order ODE"
+    - title: "Complex Number & First-Order ODE"
       file: /assets/lecture_note/MATH2351/Lecture1-4.pdf
     - title: "Second-Order ODE"
       file: 
@@ -29,7 +33,10 @@
     - title: "Multi-armed Bandit"
       file: /assets/lecture_note/COMP4212/Multi-armed Bandit.pdf
     - title: "Markov Decision Process"
-      file:
+      file: /assets/lecture_note/MDP.pdf
+    - title: "Model Free Prediction"
+      file: /assets/lecture_note/Model Free Prediction.pdf
+
 - course: ELEC 2600
   notes:
     - title: "Part 1: Basic Probability "
