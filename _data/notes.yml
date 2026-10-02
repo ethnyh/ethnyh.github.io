@@ -12,7 +12,7 @@
     - title: "Image Transformation"
       file: /assets/lecture_note/Image Transformation.pdf
     - title: "Spacial Flitering"
-      file: assets/lecture_note/Spatial Filtering.pdf
+      file: /assets/lecture_note/Spatial Filtering.pdf
     - title: "Frequency Flitering"
 - course: MATH2033
   notes:
@@ -36,6 +36,8 @@
       file: /assets/lecture_note/MDP.pdf
     - title: "Model Free Prediction"
       file: /assets/lecture_note/Model Free Prediction.pdf
+    - title: "Model Free Control"
+
 
 - course: ELEC 2600
   notes:
