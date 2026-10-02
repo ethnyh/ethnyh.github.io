@@ -20,6 +20,8 @@
       file: /assets/lecture_note/MATH2033/Real Number System.pdf
     - title: "Sequence & Limit"
       file: 
+    - title: "Function"
+      file:
 - course: MATH2351
   notes:
     - title: "Complex Number & First-Order ODE"
@@ -37,8 +39,6 @@
     - title: "Model Free Prediction"
       file: /assets/lecture_note/Model Free Prediction.pdf
     - title: "Model Free Control"
-
-
 - course: ELEC 2600
   notes:
     - title: "Part 1: Basic Probability "
