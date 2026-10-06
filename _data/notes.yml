@@ -1,6 +1,6 @@
 - course: PHYS1002
   notes:
-    - title: "Introduction"
+    - title: "Introduction to Astronomy"
       file: /assets/lecture_note/PHYS1002/Introduction 2.pdf
     - title: "Earth/Moon/Sun"
       file: /assets/lecture_note/Solar System 2.pdf
@@ -19,15 +19,17 @@
     - title: "Real Number System"
       file: /assets/lecture_note/MATH2033/Real Number System.pdf
     - title: "Sequence & Limit"
-      file: 
-    - title: "Function"
-      file:
+      file: /assets/lecture_note/MATH2033/Sequence&Limit.pdf
+    - title: "Function & Continuity"
+      file: /assets/lecture_note/MATH2033/Function_Limit_Continuity_.pdf
+    - title: "Differentiability"
 - course: MATH2351
   notes:
     - title: "Complex Number & First-Order ODE"
       file: /assets/lecture_note/MATH2351/Lecture1-4.pdf
     - title: "Second-Order ODE"
       file: 
+    - title: "Laplace Transform"
 - course: COMP4212
   notes:
     - title: "RL Basics"
@@ -39,6 +41,18 @@
     - title: "Model Free Prediction"
       file: /assets/lecture_note/Model Free Prediction.pdf
     - title: "Model Free Control"
+
+
+
+
+
+
+
+
+
+
+
+
 - course: ELEC 2600
   notes:
     - title: "Part 1: Basic Probability "
