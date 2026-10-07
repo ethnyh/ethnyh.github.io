@@ -14,6 +14,9 @@
     - title: "Spacial Flitering"
       file: /assets/lecture_note/Spatial Filtering.pdf
     - title: "Frequency Flitering"
+      file:
+    - title: "Image Restoration"
+      file:
 - course: MATH2033
   notes:
     - title: "Real Number System"
