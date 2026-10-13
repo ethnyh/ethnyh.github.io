@@ -5,6 +5,7 @@
     - title: "Earth/Moon/Sun"
       file: /assets/lecture_note/Solar System 2.pdf
     - title: "Planets/Solar System/Space Missions"
+    - title: "Stars"
 - course: COMP4421
   notes:
     - title: "Image Fundamentals"
@@ -32,7 +33,7 @@
       file: /assets/lecture_note/MATH2351/Lecture1-4.pdf
     - title: "Second-Order ODE"
       file: /assets/lecture_note/MATH2351/second-order ODE.pdf
-    - title: "Laplace Transform"
+    - title: "Laplace Transform / Series Solutions / Euler-Cauchy Equation"
 - course: COMP4212
   notes:
     - title: "RL Basics"
