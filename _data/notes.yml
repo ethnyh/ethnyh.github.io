@@ -21,12 +21,14 @@
 - course: MATH2033
   notes:
     - title: "Real Number System"
-      file: /assets/lecture_note/MATH2033/Real Number System.pdf
+      file: /assets/lecture_note/MATH2033/Real Number System 2.pdf
     - title: "Sequence & Limit"
-      file: /assets/lecture_note/MATH2033/Sequence&Limit.pdf
+      file: /assets/lecture_note/MATH2033/Sequence&Limit copy.pdf
     - title: "Function & Continuity"
-      file: /assets/lecture_note/MATH2033/Function_Limit_Continuity_.pdf
+      file: /assets/lecture_note/MATH2033/Function_Limit_Continuity_ copy.pdf
     - title: "Differentiability"
+      file: /assets/lecture_note/MATH2033/Differentiability.pdf
+    - title: "Integrability"
 - course: MATH2351
   notes:
     - title: "Complex Number & First-Order ODE"
