@@ -44,10 +44,10 @@
       file: /assets/lecture_note/COMP4212/Multi-armed Bandit.pdf
     - title: "Markov Decision Process"
       file: /assets/lecture_note/MDP.pdf
-    - title: "Model Free Prediction"
-      file: /assets/lecture_note/Model Free Prediction.pdf
-    - title: "Model Free Control"
+    - title: "Model Free Prediction / Model Free Control "
+      file: /assets/lecture_note/COMP4212/Model Free Prediction_Control.pdf
     - title: "Value Function Approximation"
+      file: /assets/lecture_note/COMP4212/Value function approximation.pdf
 
 
 
