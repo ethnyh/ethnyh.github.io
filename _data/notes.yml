@@ -18,6 +18,7 @@
       file: /assets/lecture_note/COMP4421/Frequential Filtering.pdf
     - title: "Image Restoration"
       file:
+    - title: "Color Image Processing"
 - course: MATH2033
   notes:
     - title: "Real Number System"
@@ -27,7 +28,7 @@
     - title: "Function & Continuity"
       file: /assets/lecture_note/MATH2033/Function_Limit_Continuity_ copy.pdf
     - title: "Differentiability"
-      file: /assets/lecture_note/MATH2033/Differentiability.pdf
+      file: /assets/lecture_note/MATH2033/Differentiability copy.pdf
     - title: "Integrability"
 - course: MATH2351
   notes:
@@ -36,6 +37,7 @@
     - title: "Second-Order ODE"
       file: /assets/lecture_note/MATH2351/second-order ODE.pdf
     - title: "Laplace Transform / Series Solutions / Euler-Cauchy Equation"
+    - title: "Systems of Linear ODEs"
 - course: COMP4212
   notes:
     - title: "RL Basics"
@@ -48,6 +50,9 @@
       file: /assets/lecture_note/COMP4212/Model Free Prediction_Control.pdf
     - title: "Value Function Approximation"
       file: /assets/lecture_note/COMP4212/Value function approximation.pdf
+    - title: "Advanced Tricks for DQNs"
+    - title: "Policy Gradient"
+
 
 
 
