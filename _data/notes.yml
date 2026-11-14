@@ -5,7 +5,11 @@
     - title: "Earth/Moon/Sun"
       file: /assets/lecture_note/Solar System 2.pdf
     - title: "Planets/Solar System/Space Missions"
+      file: /assets/lecture_note/PHYS1002/Solar System.pdf
     - title: "Stars"
+    - title: "Black Holes"
+    - title: "Galaxy"
+    - title: "Universe"
 - course: COMP4421
   notes:
     - title: "Image Fundamentals"
@@ -17,8 +21,13 @@
     - title: "Frequency Flitering"
       file: /assets/lecture_note/COMP4421/Frequential Filtering.pdf
     - title: "Image Restoration"
-      file:
+      file: /assets/lecture_note/COMP4421/image restoration.pdf
     - title: "Color Image Processing"
+      file: /assets/lecture_note/COMP4421/Color image processing.pdf
+    - title: "Image Compression"
+    - title: "Morphological Image Processing"
+    - title: "Image Segmentation"
+    - title: "Image Registration"
 - course: MATH2033
   notes:
     - title: "Real Number System"
@@ -30,6 +39,7 @@
     - title: "Differentiability"
       file: /assets/lecture_note/MATH2033/Differentiability copy.pdf
     - title: "Integrability"
+    - title: "Infinite Series Of Real Numbers"
 - course: MATH2351
   notes:
     - title: "Complex Number & First-Order ODE"
@@ -38,6 +48,8 @@
       file: /assets/lecture_note/MATH2351/second-order ODE.pdf
     - title: "Laplace Transform / Series Solutions / Euler-Cauchy Equation"
     - title: "Systems of Linear ODEs"
+    - title: "Nonlinear Equations"
+    - title: "PDE"
 - course: COMP4212
   notes:
     - title: "RL Basics"
@@ -52,6 +64,10 @@
       file: /assets/lecture_note/COMP4212/Value function approximation.pdf
     - title: "Advanced Tricks for DQNs"
     - title: "Policy Gradient"
+    - title: "Actor Critics"
+    - title: "Advanced Policy Gradient"
+    - title: "Continuous Control"
+    - title: "Imitation Learning"
 
 
 
