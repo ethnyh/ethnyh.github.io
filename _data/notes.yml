@@ -7,8 +7,8 @@
     - title: "Planets/Solar System/Space Missions"
       file: /assets/lecture_note/PHYS1002/Solar System.pdf
     - title: "Stars"
-    - title: "Black Holes"
-    - title: "Galaxy"
+    - title: "Black Holes & Galaxy"
+      file: /assets/lecture_note/PHYS1002/Black Holes & Galaxy.pdf
     - title: "Universe"
 - course: COMP4421
   notes:
@@ -47,7 +47,9 @@
     - title: "Second-Order ODE"
       file: /assets/lecture_note/MATH2351/second-order ODE.pdf
     - title: "Laplace Transform / Series Solutions / Euler-Cauchy Equation"
+      file: /assets/lecture_note/MATH2351/Laplace transform_Power Series Solution_Cauchy Euler EQ.pdf
     - title: "Systems of Linear ODEs"
+      file: /assets/lecture_note/MATH2351/System of linear equation.pdf
     - title: "Nonlinear Equations"
     - title: "PDE"
 - course: COMP4212
