@@ -9,7 +9,6 @@
     - title: "Stars"
     - title: "Black Holes & Galaxy"
       file: /assets/lecture_note/PHYS1002/Black Holes & Galaxy.pdf
-    - title: "Universe"
 - course: COMP4421
   notes:
     - title: "Image Fundamentals"
@@ -28,6 +27,8 @@
     - title: "Morphological Image Processing"
     - title: "Image Segmentation"
     - title: "Image Registration"
+    - title: "Feature Extraction"
+    - title: "Image Classification"
 - course: MATH2033
   notes:
     - title: "Real Number System"
@@ -70,6 +71,7 @@
     - title: "Advanced Policy Gradient"
     - title: "Continuous Control"
     - title: "Imitation Learning"
+    - title: "Model-Based RL"
 
 
 

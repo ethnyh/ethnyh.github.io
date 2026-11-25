@@ -1,6 +1,10 @@
-- title: 审判-intro
-  file: /assets/music/审判-intro.wav
+- title: 审判
+  file: /assets/music/审判.wav
   description: "2025-07-18"
+
+- title: 幻觉
+  file: /assets/music/幻觉.wav
+  description: "2026-11-18"
 
 - title: 倒流
   file: /assets/music/宿命.wav
