@@ -24,7 +24,9 @@
     - title: "Color Image Processing"
       file: /assets/lecture_note/COMP4421/Color image processing.pdf
     - title: "Image Compression"
+      file: /assets/lecture_note/COMP4211/Image Compression.pdf
     - title: "Morphological Image Processing"
+      file: /assets/lecture_note/COMP4211/morphological image processing.pdf
     - title: "Image Segmentation"
     - title: "Image Registration"
     - title: "Feature Extraction"
