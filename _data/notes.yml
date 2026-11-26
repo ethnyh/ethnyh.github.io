@@ -4,9 +4,10 @@
       file: /assets/lecture_note/PHYS1002/Introduction 2.pdf
     - title: "Earth/Moon/Sun"
       file: /assets/lecture_note/Solar System 2.pdf
-    - title: "Planets/Solar System/Space Missions"
+    - title: "Solar System"
       file: /assets/lecture_note/PHYS1002/Solar System.pdf
     - title: "Stars"
+      file: /assets/lecture_note/PHYS1002/Stars.pdf
     - title: "Black Holes & Galaxy"
       file: /assets/lecture_note/PHYS1002/Black Holes & Galaxy.pdf
 - course: COMP4421
